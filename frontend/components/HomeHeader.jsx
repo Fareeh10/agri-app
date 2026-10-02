@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   alignItems: 'center',
   justifyContent: 'space-between',
   paddingVertical: 15,          // Cleaned up: applies 15 to top and bottom
-  borderBottomWidth: 2,         // Fixed typo: added the 'r'
-  borderBottomColor: '#E0E0E0', // Added: pick any color you want here
+  borderBottomWidth: 1,         // Fixed typo: added the 'r'
+  borderBottomColor: '#bbb9b99a', // Added: pick any color you want here
   paddingLeft: 28,
   paddingRight: 33,
   marginBottom: 8,

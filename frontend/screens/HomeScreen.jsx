@@ -1,8 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity, Pressable, ScrollView ,Image} from 'react-native';
+// React and its hooks must come from 'react'
+import React, { useRef } from 'react'; 
+
+// React Native components come from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Pressable, ScrollView, Image, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeHeader from '../components/HomeHeader';
 
 export default function HomeScreen({ navigation }) {
+
   return (
     
     <SafeAreaView style={styles.container}>
@@ -17,7 +22,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.library}>
           <TouchableOpacity
             style={[styles.library_element]}
-            activeOpacity={0.7}
+            activeOpacity={0.6}
             onPress={() => navigation.navigate('Crops')}
           >
             <Image source={require('../assets/wheat-plant.png')} style={styles.library_element_image} />
@@ -26,14 +31,14 @@ export default function HomeScreen({ navigation }) {
 
           <TouchableOpacity
             style={[styles.library_element]}
-            activeOpacity={0.7}
+            activeOpacity={0.6}
             onPress={() => navigation.navigate('Animals')}
           >
             <Image source={require('../assets/poultry.png')} style={styles.library_element_image} />
-            <Text style={styles.library_element_text}>Animals</Text>
+            <Text style={styles.library_element_text}>Livestock</Text>
           </TouchableOpacity>
 
-          {/* <TouchableOpacity style={[styles.library_element, { width: '98%', aspectRatio: 3, flexDirection: 'row' }]} activeOpacity={0.7}>
+          {/* <TouchableOpacity style={[styles.library_element, { width: '98%', aspectRatio: 3, flexDirection: 'row' }]} activeOpacity={0.6}>
             <Image source={require('../assets/cultivation.png')} style={styles.library_element_image} />
             <Text style={styles.library_element_text}>Cultivation Tips</Text>
           </TouchableOpacity> */}
@@ -42,17 +47,17 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.title}>Tools</Text>
         <View style={styles.library}>
           
-          <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.7}>
+          <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.6}>
             <Image source={require('../assets/ai-image.png')} style={styles.tool_image} />
             <Text style={styles.tool_element_text}>Plant Diagnosis</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.7}>
+          <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.6}>
             <Image source={require('../assets/fertilizer.png')} style={styles.tool_image} />
             <Text style={styles.tool_element_text}>Fertilizer Calculator</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.7}>
+          <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.6}>
             <Image source={require('../assets/pesticide.png')} style={styles.tool_image} />
             <Text style={styles.tool_element_text}>Pesticide Calculator</Text>
           </TouchableOpacity>
@@ -65,8 +70,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  // backgroundColor: '#fff',
-
+    backgroundColor: '#ffffff7e',
 },
   scrollContent: {
     paddingBottom: 30,
@@ -90,12 +94,7 @@ const styles = StyleSheet.create({
   library_element: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#ddd',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    borderColor: '#bbb9b99a',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
@@ -131,12 +130,7 @@ const styles = StyleSheet.create({
   tool_element: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#ddd',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    borderColor: '#bbb9b99a',
     flexDirection : 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

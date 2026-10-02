@@ -11,41 +11,25 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import CategoryCard from '../components/CategoryCard';
 
-const crops = [
+const animals = [
   {
-    id: 'rice',
-    name: 'Rice',
-    image: require('../assets/crops/rice.png'),
+    id: 'cow',
+    name: 'Cow',
+    image: require('../assets/animals/cow.png'),
   },
   {
-    id: 'tomato',
-    name: 'Tomato',
-    image: require('../assets/crops/tomato.png'),
+    id: 'goat',
+    name: 'Goat',
+    image: require('../assets/animals/goat.png'),
   },
   {
-    id: 'banana',
-    name: 'Banana',
-    image: require('../assets/crops/banana.png'),
+    id: 'chicken',
+    name: 'Chicken',
+    image: require('../assets/animals/chicken.png'),
   },
-  {
-    id: 'barley',
-    name: 'Barley',
-    image: require('../assets/crops/barley.png'),
-  },
-  {
-    id: 'coconut',
-    name: 'Coconut',
-    image: require('../assets/crops/coconut.png'),
-  },
-  {
-    id: 'rubber',
-    name: 'Rubber',
-    image: require('../assets/crops/rubber.png'),
-  },
-  
 ];
 
-export default function CropsScreen({ navigation }) {
+export default function AnimalsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -64,17 +48,17 @@ export default function CropsScreen({ navigation }) {
             </Pressable>
 
             <View style={styles.headerText}>
-                <Text style={styles.title}>Crops</Text>
+                <Text style={styles.title}>Livestock</Text>
 
                 <Text style={styles.subtitle}>
-                Explore and learn about different crops
+                Explore and learn about different Farm Livestock
                 </Text>
             </View>
 
         </View>
 
-        <View style={styles.cropsList}>
-          {crops.map((crop) => (
+        <View style={styles.animalList}>
+          {animals.map((crop) => (
             <CategoryCard
                 key={crop.id}
                 item={crop}
@@ -95,7 +79,7 @@ export default function CropsScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#fff',
+        backgroundColor: '#ffffff7e',
     },
 
     content: {
@@ -119,7 +103,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 28,
+        fontSize: 30,
         fontWeight: '700',
         color: '#111',
     },
@@ -130,8 +114,8 @@ const styles = StyleSheet.create({
         marginTop: 6,
     },
 
-    cropsList: {
-        paddingHorizontal: 20,
+    animalList: {
+        paddingHorizontal: 25,
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
