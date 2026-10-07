@@ -79,7 +79,7 @@ export default function AnimalsScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff7e',
+        backgroundColor: '#ffffff00',
     },
 
     content: {

@@ -70,7 +70,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff7e',
+    backgroundColor: '#ffffff00',
 },
   scrollContent: {
     paddingBottom: 30,
@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   library_element: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#bbb9b99a',
+    borderColor: '#bbb9b94f',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   tool_element: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#bbb9b99a',
+    borderColor: '#bbb9b94f',
     flexDirection : 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

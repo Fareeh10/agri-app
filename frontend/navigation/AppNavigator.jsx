@@ -20,6 +20,7 @@ import MarketScreen from '../screens/MarketScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import CropsScreen from '../screens/CropsScreen';
 import AnimalsScreen from '../screens/AnimalsScreen';
+import CommentsScreen from '../screens/CommentsScreen';
 
 const Stack = createNativeStackNavigator(); //This creates your navigation stack.
 //You can think of Stack as an object that gives you two important components: <Stack.Navigator> and <Stack.Screen>
@@ -41,7 +42,7 @@ function MainTabs() {
             height: 65,
           },
           tabBarIcon: ({ focused, color, size }) => {
-            console.log('route.name:', route.name);
+
             let iconName;
             if (route.name === 'Home') {
               iconName = focused ? 'home' : 'home-outline';
@@ -114,6 +115,11 @@ export default function AppNavigator() {
         <Stack.Screen
           name="Animals"
           component={AnimalsScreen}
+        />
+
+        <Stack.Screen
+          name="Comments"
+          component={CommentsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

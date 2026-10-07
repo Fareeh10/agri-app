@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function PostCard({ post }) {
+  const navigation = useNavigation();
+  const [expanded, setExpanded] = useState(false);
+  const shouldTruncate = post.content?.length > 140;
+
   return (
     <View style={styles.card}>
 
       {/* User information */}
       <View style={styles.userRow}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {post.user.name.charAt(0)}
-          </Text>
+          {post.user.profileImage ? 
+            (<Image source={{ uri: post.user.profileImage }} style={styles.avatarImage} />) : 
+            (<Text style={styles.avatarText}>{post.user.name?.charAt(0) ?? '?'}</Text>)
+          }
         </View>
-
+      
         <View>
           <Text style={styles.userName}>
             {post.user.name}
@@ -22,13 +28,28 @@ export default function PostCard({ post }) {
           <Text style={styles.time}>
             {post.time}
           </Text>
+          
         </View>
       </View>
 
       {/* Post content */}
-      <Text style={styles.content}>
+      <Text
+        style={styles.content}
+        numberOfLines={expanded ? 0 : 4} // if expanded is true (0 means show all), show all lines; otherwise, show only 4 lines
+      >
         {post.content}
       </Text>
+
+      {shouldTruncate && (
+        <Pressable 
+             onPress={() => setExpanded(!expanded)} 
+             style={styles.readMoreButton}
+        >
+          <Text style={styles.readMoreText}>
+            {expanded ? 'Read less' : 'Read more'}
+          </Text>
+        </Pressable>
+      )}
 
       {post.image && (
         <Image
@@ -51,7 +72,10 @@ export default function PostCard({ post }) {
           </Text>
         </Pressable>
 
-        <Pressable style={styles.action}>
+        <Pressable
+          style={styles.action}
+          onPress={() => navigation.navigate('Comments', { postId: post.id })}
+        >
           <Ionicons
             name="chatbubble-outline"
             size={21}
@@ -146,10 +170,19 @@ const styles = StyleSheet.create({
   },
 
   postImage: {
-  width: '100%',
-  height: 200,
-  borderRadius: 12,
-  resizeMode: 'cover',
-  marginBottom: 14,
-},
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    resizeMode: 'cover',
+    marginBottom: 14,
+  },
+
+  readMoreButton: {
+    marginBottom: 16,
+  },
+
+  readMoreText: {
+    color: '#35AA47',
+    fontWeight: '600',
+  },
 });
