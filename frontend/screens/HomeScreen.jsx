@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.library}>
           
           <TouchableOpacity style={[styles.tool_element]} activeOpacity={0.6}>
-            <Image source={require('../assets/ai-image.png')} style={styles.tool_image} />
+            <Image source={require('../assets/ai-image.png')} style={[styles.tool_image, { width: '37', height: '35' }]} />
             <Text style={styles.tool_element_text}>Plant Diagnosis</Text>
           </TouchableOpacity>
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   library_element: {
     backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#bbb9b94f',
+    borderColor: '#0d0c0c2d',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   tool_element: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#bbb9b94f',
+    borderColor: '#0d0c0c2d',
     flexDirection : 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

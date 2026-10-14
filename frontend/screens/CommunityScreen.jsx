@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  Pressable,
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -82,21 +83,49 @@ export default function CommunityScreen({ navigation }) {
     );
   }
 
+  // function handleLike(postId) {
+  //   // Find the post in the state
+  //   const postIndex = posts.findIndex(post => post._id === postId);
+  //   if (postIndex === -1) return; // Post not found
+
+  //   // Create a new array of posts with the updated like count
+  //   const updatedPosts = [...posts];
+  //   updatedPosts[postIndex] = {
+  //     ...updatedPosts[postIndex],
+  //     likes: updatedPosts[postIndex].likes + 1, // Increment the like count
+  //   };
+
+  //   // Update the state with the new array of posts
+  //   setPosts(updatedPosts);
+  // }
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
-        <Ionicons name="search-outline" size={18} color="#7b7b7b" />
-        <TextInput
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          placeholder="Search posts or people..."
-          placeholderTextColor="#8a8a8a"
-          style={styles.searchInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-      </View>
+      <View style={styles.searchRow}>
+        <View style={styles.searchContainer}>
+          <Ionicons name="search-outline" size={18} color="#7b7b7b" />
+          <TextInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search posts or people..."
+            placeholderTextColor="#8a8a8a"
+            style={styles.searchInput}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
 
+        {/* notifcation button */}
+        <Pressable
+          style={styles.notificationButton}
+          onPress={() => navigation.navigate('Notifications')}
+        >
+          <Ionicons name="notifications-outline" size={25} color="#0f100f" />
+
+        </Pressable>
+
+      </View>
+      
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -115,7 +144,7 @@ export default function CommunityScreen({ navigation }) {
                   content: post.content,
                   image: post.image || null,
                   likes: post.likes?.length || 0,
-                  comments: 0,
+                  comments: post.commentCount,
                 }}
               />
             ))
@@ -142,20 +171,18 @@ const styles = StyleSheet.create({
   },
 
   searchContainer: {
+    width: '87%',
+    height: 52,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    marginHorizontal: 16,
-    marginTop: 30,
-    marginBottom: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+
+    marginTop: 14,
+    marginBottom: 16,
+    paddingHorizontal: 14,
+    borderWidth: 1,
+    borderColor: '#D2DAD3',
+    borderRadius: 28,
+    backgroundColor: '#FFFFFF',
   },
 
   searchInput: {
@@ -207,11 +234,28 @@ const styles = StyleSheet.create({
 
   posts: {
     gap: 0,
+    
   },
 
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    gap: 10,
+  },
+
+  notificationButton: {
+    width: 26,
+    height: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+    padding : 0
   },
 });

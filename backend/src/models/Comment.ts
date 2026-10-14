@@ -6,6 +6,7 @@ export interface IComment extends Document {
   postId: mongoose.Types.ObjectId;
   authorId: mongoose.Types.ObjectId;
   content: string;
+  likes: mongoose.Types.ObjectId[];
   parentCommentId?: mongoose.Types.ObjectId;
   createdAt: Date;
 }
@@ -41,6 +42,14 @@ const commentSchema = new Schema<IComment>(
       ref: 'Comment',
       default: null,
     },
+
+    // List of users who liked this comment
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
 
   {

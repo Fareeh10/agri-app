@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
 
     borderWidth: 1,
-    borderColor: '#bbb9b94f',
+    borderColor: '#0d0c0c2d',
     borderRadius: 17,
     
     justifyContent: 'center',

@@ -61,7 +61,11 @@ export default function PostCard({ post }) {
       {/* Actions */}
       <View style={styles.actions}>
 
-        <Pressable style={styles.action}>
+        <Pressable style={styles.action}
+          onPress={() => {
+            // Handle like action here
+          }}
+        >
           <Ionicons
             name="heart-outline"
             size={22}
@@ -96,6 +100,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 16,
+    borderColor: '#D6DE D7'.replace(' ', ''),
+    borderWidth: 1,
     padding: 16,
     marginBottom: 14,
 
@@ -103,10 +109,7 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    }
   },
 
   userRow: {

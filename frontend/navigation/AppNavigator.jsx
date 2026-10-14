@@ -21,6 +21,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import CropsScreen from '../screens/CropsScreen';
 import AnimalsScreen from '../screens/AnimalsScreen';
 import CommentsScreen from '../screens/CommentsScreen';
+import Login from '../screens/Login';
+import SignUp from '../screens/SignUp';
 
 const Stack = createNativeStackNavigator(); //This creates your navigation stack.
 //You can think of Stack as an object that gives you two important components: <Stack.Navigator> and <Stack.Screen>
@@ -121,6 +123,17 @@ export default function AppNavigator() {
           name="Comments"
           component={CommentsScreen}
         />
+
+        <Stack.Screen
+          name="Signup"
+          component={SignUp}
+        />
+
+        <Stack.Screen
+          name="Login"
+          component={Login}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

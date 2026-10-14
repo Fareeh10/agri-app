@@ -18,6 +18,8 @@ router.get('/', async (req, res) => {
       .sort({ createdAt: -1 }) // Sort posts by creation date in descending order (newest first)
       .populate('authorId', 'name profileImage'); // Mongoose uses authorId's stored User ObjectId to fetch that User, then replaces authorId with { _id, name, profileImage } in the response.
     
+    // aggregate() is a Mongoose/MongoDB operation, not a JavaScript
+    // iterable method. This query returns an array of grouped results.
     const commentCounts = await Comment.aggregate([
       {
         $group: {
@@ -34,6 +36,8 @@ router.get('/', async (req, res) => {
     //   { _id: "postC", count: 1 }
     // ];
 
+    // reduce() and map() are array methods that process array items.
+    // Here reduce() converts the aggregation result array into a lookup object.
     const commentCountMap = commentCounts.reduce((acc, curr) => {
       //accumulator (acc) :  The result I’ve built so far. acc is initially an empty object {}. It will eventually become a map of postId to comment count.
       //current value (curr) :  The current element being processed in the array. curr is an object like { _id: "postA", count: 3 }.
