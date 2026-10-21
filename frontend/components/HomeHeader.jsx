@@ -39,7 +39,7 @@ export default function HomeHeader() {
         >
         <Ionicons
             name="ellipsis-vertical"
-            size={22}
+            size={23}
             color="#0f100f"
         />
        </Pressable>
@@ -96,9 +96,9 @@ const styles = StyleSheet.create({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
-  paddingVertical: 15,          // Cleaned up: applies 15 to top and bottom
-  borderBottomWidth: 1,         // Fixed typo: added the 'r'
-  borderBottomColor: '#bbb9b99a', // Added: pick any color you want here
+  paddingVertical: 14,         
+  borderBottomWidth: 1,         
+  borderBottomColor: '#bbb9b99a', 
   paddingLeft: 28,
   paddingRight: 33,
   marginBottom: 8,

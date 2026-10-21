@@ -69,7 +69,7 @@ export default function PostCard({ post }) {
           <Ionicons
             name="heart-outline"
             size={22}
-            color="#555"
+            color="#010101"
           />
           <Text style={styles.actionText}>
             {post.likes}
@@ -83,7 +83,7 @@ export default function PostCard({ post }) {
           <Ionicons
             name="chatbubble-outline"
             size={21}
-            color="#555"
+            color="#010101"
           />
           <Text style={styles.actionText}>
             {post.comments}
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
 
   actionText: {
     fontSize: 14,
-    color: '#555',
+    color: '#010101',
   },
 
   postImage: {

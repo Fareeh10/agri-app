@@ -1,15 +1,14 @@
 import express from 'express';
 import User from '../models/User.js';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 
 const router = express.Router();
-
 
 // POST /api/users
 router.post('/', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
+    
     // checking if the user already exists
     const existingUser = await User.findOne({
       where: { email },
@@ -25,7 +24,8 @@ router.post('/', async (req, res) => {
       password,
     });
 
-    res.status(201).json(user);
+    const { password: _password, ...safeUser } = user.toObject();
+    res.status(201).json(safeUser);
 
   } catch (error) {
     console.error('Error creating user:', error);
@@ -42,27 +42,27 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({
-      where: { email },
+       email ,
     });
+
+    console.log('User found:', user);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
+    if (password !== user.password) {
       return res.status(401).json({
         message: 'Invalid email or password',
       });
     }
 
-    return res.status(200).json(user);
+    const { password: _password, ...safeUser } = user.toObject();
+    return res.status(200).json(safeUser);
   } catch (error) {
     console.error('Error logging in:', error);
     return res.status(500).json({ message: 'Failed to log in' });
   }
 });
-
 
 export default router;

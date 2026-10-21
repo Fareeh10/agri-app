@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
@@ -40,7 +41,7 @@ export default function Login({ navigation }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/login`, {
+      const response = await fetch(`${API_URL}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: normalizedEmail, password }),
@@ -50,8 +51,14 @@ export default function Login({ navigation }) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || 'Login failed. Please check your credentials.');
       }
-
-      navigation.navigate('Profile');
+    
+      const obj = await response.json();
+      console.log('Login successful:', obj);
+      await AsyncStorage.setItem('user', JSON.stringify(obj));
+      navigation.navigate('Main', {
+        screen: 'Profile',
+        params: { user: obj },
+       });
     } catch (error) {
       console.error('Login error:', error);
       Alert.alert('Login failed', error.message);

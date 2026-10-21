@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView }from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 const CATEGORIES = [
@@ -246,9 +246,7 @@ export default function MarketScreen() {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
-    backgroundColor: '#F3F5F3',
-  },
+    flex: 1,  },
   header: {
     minHeight: 68,
     paddingHorizontal: 24,
@@ -256,11 +254,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,         
+   borderBottomColor: '#bbb9b99a', 
   },
   headerTitle: {
-    fontSize: 27,
+    fontSize: 20,
     fontWeight: '700',
     color: '#202923',
+
   },
   menuButton: {
     width: 42,
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
     height: 52,
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     marginTop: 14,
     marginBottom: 16,
     paddingHorizontal: 14,
@@ -293,6 +294,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E2E7E2',
+    borderTopWidth: 1,
+    borderTopColor: '#E2E7E2',
   },
   categoryTab: {
     flex: 1,
@@ -302,11 +305,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 7,
     paddingHorizontal: 5,
-    borderBottomWidth: 3,
+    borderBottomWidth: 2,
     borderBottomColor: 'transparent',
   },
   categoryTabActive: {
-    backgroundColor: '#EAF5EB',
+    backgroundColor: '#eaf5eb7c',
     borderBottomColor: '#35AA47',
   },
   categoryText: {

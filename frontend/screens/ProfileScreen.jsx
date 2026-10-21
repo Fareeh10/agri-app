@@ -5,11 +5,11 @@ import {
   ActivityIndicator,
   Image,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -118,8 +118,11 @@ export default function ProfileScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+                <Text style={styles.headerTitle}>Profile</Text>
+        </View>
       <View style={styles.profileContent}>
-        <Text style={styles.screenTitle}>Profile</Text>
+        
         {profileImage ? (
           <Image source={{ uri: profileImage }} style={styles.profileImage} />
         ) : (
@@ -129,6 +132,21 @@ export default function ProfileScreen({ navigation, route }) {
         )}
         <Text style={styles.name}>{displayName}</Text>
         {email && <Text style={styles.email}>{email}</Text>}
+        <View style={styles.buttonContainer}>
+            <Pressable style={styles.editButton}>
+            <Text style={styles.editButtonText}>Edit Profile</Text>
+            </Pressable>
+
+            <Pressable style={styles.logoutButton}
+                onPress={async () => {
+                    await AsyncStorage.removeItem('user');
+                    navigation.navigate('Profile');
+                }}
+            >
+             <Text style={styles.logoutButtonText}>Log out</Text>
+            </Pressable>
+        </View>
+
         <View style={styles.infoCard}>
           <Ionicons name="leaf-outline" size={22} color="#35AA47" />
           <View style={styles.infoTextContainer}>
@@ -138,7 +156,20 @@ export default function ProfileScreen({ navigation, route }) {
             </Text>
           </View>
         </View>
+
+        <View style={[styles.infoCard, {marginTop : '20', borderWidth: 1, borderColor: '#40404024',}]}>
+            <Ionicons name="notifications-outline" size={22} color="#35AA47" />
+            <Text style={styles.infoTitle}>Notifications</Text>
+        </View>
+
+        <View style={[styles.infoCard, {marginTop : '20', borderWidth: 1, borderColor: '#40404024',}]}>
+            <Ionicons name="chatbubble-outline" size={22} color="#35AA47" />
+            <Text style={styles.infoTitle}>Your Posts</Text>
+        </View>
+        
       </View>
+
+      
     </SafeAreaView>
   );
 }
@@ -205,7 +236,7 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     alignSelf: 'flex-start',
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: '700',
     color: '#1D2A1F',
     marginBottom: 32,
@@ -215,18 +246,22 @@ const styles = StyleSheet.create({
     height: 112,
     borderRadius: 56,
     backgroundColor: '#E7F5E8',
+    borderWidth: 1,
+    borderColor: '#35AA47',
   },
   profilePlaceholder: {
-    width: 112,
-    height: 112,
+    width: 100,
+    height: 100,
     borderRadius: 56,
     backgroundColor: '#E7F5E8',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center',   
+    borderWidth: 2,
+    borderColor: '#35aa47ad',
   },
   name: {
     color: '#1D2A1F',
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '700',
     marginTop: 16,
   },
@@ -251,11 +286,59 @@ const styles = StyleSheet.create({
   infoTitle: {
     color: '#1D2A1F',
     // fontSize: 15,
-    fontWeight: '700',
+    fontWeight: '500',
   },
   infoDescription: {
     color: '#68736A',
     fontSize: 13,
     marginTop: 4,
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap : 16,
+    marginTop: 16,
+  },
+  editButton: {
+    backgroundColor: '#35AA47',
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 40,
+    alignItems: 'center',
+  },
+  editButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  logoutButton: {
+    // width: '100%',
+    backgroundColor: '#e24736',
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 40,
+    alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  header: {
+    minHeight: 68,
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,         
+    borderBottomColor: '#bbb9b99a', 
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#202923',
   },
 });

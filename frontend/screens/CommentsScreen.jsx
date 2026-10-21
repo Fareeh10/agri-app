@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   TextInput,
@@ -9,9 +8,11 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -22,9 +23,30 @@ export default function CommentsScreen({ route, navigation }) {
   const [expandedReplies, setExpandedReplies] = useState({});
   const [commentText, setCommentText] = useState('');
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
     fetchComments();
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadCurrentUser = async () => {
+      try {
+        const savedUser = await AsyncStorage.getItem('user');
+        if (!cancelled && savedUser) {
+          setCurrentUserId(JSON.parse(savedUser)._id);
+        }
+      } catch (error) {
+        console.warn('Could not load saved user for comments:', error);
+      }
+    };
+
+    loadCurrentUser();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const fetchComments = async () => {
@@ -38,11 +60,62 @@ export default function CommentsScreen({ route, navigation }) {
       }
 
       const data = await response.json();
+      console.log('Fetched comments:', data); // Log the fetched comments for debugging
       setComments(data);
     } catch (error) {
       console.error('Error fetching comments:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleLike = async (commentId) => {
+    if (!currentUserId) {
+      Alert.alert('Not logged in', 'You must be logged in to like comments.');
+      return;
+    }
+
+    const comment = comments.find((item) => { 
+        return item._id === commentId;
+    });
+    if (!comment) return;
+
+    const alreadyLiked = comment.likes?.some(
+      (like) => String(like?._id ?? like) === String(currentUserId)
+    ) ?? false;
+
+    const likeOrUnlike = alreadyLiked ? 'unlike' : 'like';
+
+    try {
+      const response = await fetch(
+        `${API_URL}/api/comments/${commentId}/${likeOrUnlike}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUserId }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+
+      const updatedComment = await response.json();
+
+      setComments((prevComments) =>
+        prevComments.map((item) =>
+          item._id === commentId
+            ? {
+                ...item,
+                likes: updatedComment.likes,
+              }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error('Error liking comment:', error);
     }
   };
 
@@ -109,6 +182,10 @@ export default function CommentsScreen({ route, navigation }) {
 
     const replies = getReplies(item._id);
     const isExpanded = expandedReplies[item._id];
+    
+    const isLiked = item.likes?.some( //.some() checks whether at least one element in an array satisfies a condition.
+      (like) => String(like?._id ?? like) === String(currentUserId)
+    ) ?? false;
 
     return (
       <View style={styles.commentWrapper}>
@@ -133,16 +210,14 @@ export default function CommentsScreen({ route, navigation }) {
 
             <View style={styles.actions}>
               <Pressable style={styles.actionButton}
-                onPress={() => {
-                  // Handle like action here
-                }}
+                onPress={() => handleLike(item._id)}
               >
                 <Ionicons
-                  name="heart-outline"
-                  size={22}
-                  color="#555"
+                  name={isLiked ? 'heart' : 'heart-outline'}
+                  size={20}
+                  color={isLiked ? '#e80e0ec2' : '#010101'}
                 />
-                <Text style={styles.actionText}>{item.likes?.length ?? 0}</Text>
+                <Text style={[styles.actionText]}>{item.likes?.length ?? 0}</Text>
               </Pressable>
 
               <Pressable style={styles.replyButton}
@@ -203,14 +278,12 @@ export default function CommentsScreen({ route, navigation }) {
 
                   <View style={styles.actions}>
                     <Pressable style={styles.actionButton}
-                      onPress={() => {
-                        // Handle like action here
-                      }}
+                      onPress={() => handleLike(reply._id)}
                     >
                       <Ionicons
-                        name="heart-outline"
+                        name={reply.likes?.some((like) => String(like?._id ?? like) === String(currentUserId)) ? "heart" : "heart-outline"}
                         size={20}
-                        color="#555"
+                        color={reply.likes?.some((like) => String(like?._id ?? like) === String(currentUserId)) ? '#e80e0ec2' : '#010101'}
                       />
                       <Text style={styles.actionText}>{reply.likes?.length ?? 0}</Text>
                     </Pressable>
@@ -398,7 +471,7 @@ const styles = StyleSheet.create({
 
   actionText: {
     fontSize: 12,
-    color: '#333',
+    color: '#010101',
     marginLeft: 5,
   },
 
@@ -410,7 +483,7 @@ const styles = StyleSheet.create({
   replyText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#333',
+    color: '#010101',
   },
 
   repliesButton: {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -8,7 +7,7 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import PostCard from '../components/PostCard';
 
@@ -257,5 +256,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     padding : 0
-  },
+  }
 });
